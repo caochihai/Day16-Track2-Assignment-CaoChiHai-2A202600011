@@ -1,0 +1,6 @@
+{
+    "train_time_sec": 182.88,
+    "mean_dev_auc": 0.8337,
+    "test_auc": 0.8322,
+    "test_f1": 0.6594
+}

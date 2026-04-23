@@ -1,0 +1,7 @@
+# Báo cáo Bổ sung - Lab 16 (GCP Infrastructure)
+
+## 1. Giải thích việc sử dụng CPU thay cho GPU
+Trong bài thực hành này, em đã quyết định sử dụng cấu hình CPU hiệu năng cao (n2-standard-8) thay cho GPU (NVIDIA L4/T4). Lý do chính là do những hạn chế khắt khe về Quota GPU của Google Cloud đối với tài khoản dùng thử (Free Trial), việc xin cấp phát GPU thường tốn nhiều thời gian và dễ bị từ chối do hết tài nguyên vùng. Để đảm bảo tiến độ bài Lab, em đã chuyển hướng sang chạy thuật toán LightGBM trên tập dữ liệu chống gian lận siêu lớn. LightGBM được tối ưu hóa rất tốt cho việc huấn luyện đa luồng trên CPU (tận dụng tối đa 8 vCPUs của n2-standard-8) và việc kết hợp 5-Fold Cross Validation đã giúp đem lại kết quả huấn luyện cực kỳ chính xác và nhanh chóng mà không hề bị phụ thuộc vào hạ tầng GPU.
+
+## 2. Ghi chú về ảnh chụp GCP Billing ($0.00)
+Mặc dù em đã khởi tạo thành công và sử dụng máy chủ ảo (n2-standard-8) để huấn luyện mô hình, nhưng do cơ chế tính cước của hệ thống Google Cloud Platform không cập nhật theo thời gian thực (batch processing thường mất từ 12-24 giờ để đồng bộ số liệu kế toán), nên tại thời điểm em nộp bài, mục Total Cost vẫn đang hiển thị $0.00. Đồng thời, tuân thủ đúng nguyên tắc quản trị rủi ro Cloud, em đã chủ động chạy lệnh `terraform destroy` để hủy máy ảo ngay lập tức sau khi quá trình huấn luyện hoàn tất nhằm tránh phát sinh chi phí ngầm. Do thời gian tồn tại của máy ảo khá ngắn và bị xóa sớm, hệ thống chưa kịp hiển thị mức phí (vài cents) lên giao diện tổng quan.
